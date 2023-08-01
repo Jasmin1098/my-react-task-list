@@ -1,29 +1,49 @@
 import React from 'react';
 import Task from './Task';
-import { useState,useEffect } from 'react';
+import useTaskManager from './TaskManager';
 
 const TaskList = () => {
-    const [tasks, setTasks] = useState([]);
+    const { tasks,crearTarea, borrarTarea, actualizarTarea } = useTaskManager();
+    const [newTaskDescription, setNewTaskDescription] = React.useState('');
     
-    useEffect (() => {
-        const taskGuardadas = Object.keys(localStorage).filter((key) => key.startsWith('task_'));
-        const taskCargadas = taskGuardadas.map((key) => JSON.parse(localStorage.getItem(key)));
-        setTasks(taskCargadas);
-    }, []);
+   const handleNewTaskChange = (event) =>{
+    setNewTaskDescription(event.target.value);
+   };
+
+   const handleNewTaskSubmit = (event) => {
+    event.preventDefault();
+    if (newTaskDescription.trim() !== '') {
+      crearTarea(newTaskDescription);
+      setNewTaskDescription('');
+    }
+  };
 
     return (
+        <div>
         <ul>
             {tasks.map((task, index) => (
-                <li key={index}>
-                 <Task id={`task_${index}`} descripcion={task.descripcion} completado={task.completado}/>
+                <li key={task.id}>
+                 <Task 
+                 id={`task_${index}`}
+                 description={task.description}
+                 completado={task.completado}
+                 task={task}
+                 onDelete={borrarTarea}
+                 onUpdate={actualizarTarea}
+                 />
                 </li>
-            ))}
-            <li> Completar actividades pendientes</li>
-            <li>Ver videos de la plataforma</li>
-            <li>Agregar cambios al codigo</li>
-            <li>Leer documentación complementaria</li> 
+            ))} 
         </ul>
-
+        <form onSubmit={handleNewTaskSubmit}>
+            <input 
+                type="text"
+                value={newTaskDescription}
+                onChange={handleNewTaskChange}
+                placeholder="Escriba una nueva tarea"
+            />
+            <button type="submit">Agregar tarea</button>
+            </form>
+        </div>
     );
 };
 

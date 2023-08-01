@@ -1,21 +1,18 @@
 import React from 'react';
 import { useState, useEffect } from 'react';
 
-const Task = ({id, descripcion}) => {
-    const [completado, setCompletado] = useState(false);
+const Task = ({task, onDelete, onUpdate}) => {
+    const {id, description, completado} = task;
 
-    const cambioCheck = () => {
-        setCompletado(!completado)
+    const handleCheckboxChange = () => {
+        onUpdate(id, {completado: !completado});
     };
-
-    useEffect(() => {
-        localStorage.setItem(`task_${id}`, JSON.stringify({completado, descripcion}));
-    }, [id, completado, descripcion]);
 
     return (
         <div>
-            <span>{descripcion}</span>
-           <input type="checkbox" checked={completado} onChange={cambioCheck}/>
+            <span>{description}</span>
+           <input type="checkbox" checked={completado} onChange={handleCheckboxChange}/>
+           <button onClick={() => onDelete(id)}>Eliminar Tarea</button>
         </div>
     );
 };
