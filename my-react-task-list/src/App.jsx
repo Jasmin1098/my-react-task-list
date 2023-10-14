@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react'
 import Header from './Components/Header';
 import TaskList from './Components/TaskList';
+import { ChakraProvider, CSSReset, ColorModeScript} from '@chakra-ui/react'
+import theme from "./Components/mytheme";
 import "./App.css";
 
 function App () {
@@ -22,12 +24,14 @@ function App () {
 }];
 
   return (
-    
+    <ChakraProvider theme={theme}>
+      <CSSReset />
+      <ColorModeScript />
       <div>
           <Header />
           <TaskList tasks={listaTareas} />
       </div>
-    
+      </ChakraProvider>
   );
 };
 
