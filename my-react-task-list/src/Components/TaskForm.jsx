@@ -12,16 +12,13 @@ const TaskForm = ({ addTask}) => {
     };
     const handleSubmit = (event) => {
         event.preventDefault();
-        
         if(name.trim().length <3){
             alert('El nombre debe tener al menos 3 caracteres');
         }
-
         addTask(name, description);
         setName('');
         setDescription('');
     };
-
     return (
         <form onSubmit={handleSubmit}>
       <div>
