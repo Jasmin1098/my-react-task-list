@@ -9,7 +9,6 @@ const TaskList = () => {
    const handleNewTaskChange = (event) =>{
     setNewTaskDescription(event.target.value);
    };
-
    const handleNewTaskSubmit = (event) => {
     event.preventDefault();
     if (newTaskDescription.trim() !== '') {
@@ -17,7 +16,6 @@ const TaskList = () => {
       setNewTaskDescription('');
     }
   };
-
     return (
         <div>
         <ul>
@@ -46,5 +44,4 @@ const TaskList = () => {
         </div>
     );
 };
-
 export default TaskList;
